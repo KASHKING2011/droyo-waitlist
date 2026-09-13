@@ -1,0 +1,38 @@
+:root {
+  --ink: #18151e;
+  --muted: #65606d;
+  --purple: #765fe4;
+  --line: rgba(30, 22, 43, .11);
+}
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body { margin: 0; color: var(--ink); background: #fbfafd; font: 16px/1.68 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+a { color: inherit; }
+a:focus-visible { outline: 3px solid rgba(82, 75, 220, .5); outline-offset: 3px; border-radius: 8px; }
+.shell { width: min(820px, calc(100% - 36px)); margin: 0 auto; }
+.legal-nav { width: min(1080px, calc(100% - 36px)); height: 78px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-size: 20px; font-weight: 850; letter-spacing: -.04em; }
+.brand img { width: 38px; height: 38px; }
+.back { padding: 10px 15px; border: 1px solid var(--line); border-radius: 999px; color: #4f4957; background: rgba(255,255,255,.82); text-decoration: none; font-size: 14px; font-weight: 750; box-shadow: 0 7px 20px rgba(42,30,60,.06); }
+.back:hover { color: #27212e; border-color: rgba(75,58,130,.2); }
+main { padding: 42px 0 82px; }
+.legal-card { padding: clamp(28px, 6vw, 64px); border: 1px solid var(--line); border-radius: clamp(28px, 5vw, 44px); background: #fff; box-shadow: 0 24px 75px rgba(48,34,69,.08); }
+.kicker { margin-bottom: 13px; color: #654bd0; font-size: 12px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+h1 { margin: 0; font-size: clamp(42px, 8vw, 72px); line-height: 1; letter-spacing: -.065em; }
+.intro { max-width: 650px; margin: 22px 0 10px; color: var(--muted); font-size: 18px; }
+.updated { margin: 0 0 42px; color: #77717f; font-size: 13px; }
+h2 { margin: 36px 0 9px; font-size: 22px; line-height: 1.25; letter-spacing: -.035em; }
+p, li { color: var(--muted); }
+ul { padding-left: 22px; }
+li + li { margin-top: 7px; }
+.contact { margin-top: 40px; padding: 20px 22px; border-radius: 22px; background: linear-gradient(145deg, #f4f0ff, #eef8ff); }
+.contact h2 { margin-top: 0; }
+.contact a { color: #5740c0; font-weight: 800; text-underline-offset: 3px; }
+footer { padding: 0 0 48px; color: #706a78; text-align: center; font-size: 13px; }
+@media (max-width: 520px) {
+  .legal-nav { height: 70px; }
+  .back { padding: 8px 12px; font-size: 12px; }
+  main { padding-top: 22px; }
+  .intro { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }

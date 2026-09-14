@@ -786,34 +786,36 @@
                 <select id="country-code" name="country_code">
                   <option value="US" data-dial="+1" selected>United States (+1)</option>
                   <option value="CA" data-dial="+1">Canada (+1)</option>
-                  <option value="GB" data-dial="+44">United Kingdom (+44)</option>
-                  <option value="AU" data-dial="+61">Australia (+61)</option>
-                  <option value="DE" data-dial="+49">Germany (+49)</option>
-                  <option value="FR" data-dial="+33">France (+33)</option>
-                  <option value="NL" data-dial="+31">Netherlands (+31)</option>
-                  <option value="IE" data-dial="+353">Ireland (+353)</option>
-                  <option value="NZ" data-dial="+64">New Zealand (+64)</option>
+                  <option value="GB" data-dial="+44" data-trunk="0">United Kingdom (+44)</option>
+                  <option value="AU" data-dial="+61" data-trunk="0">Australia (+61)</option>
+                  <option value="DE" data-dial="+49" data-trunk="0">Germany (+49)</option>
+                  <option value="FR" data-dial="+33" data-trunk="0">France (+33)</option>
+                  <option value="NL" data-dial="+31" data-trunk="0">Netherlands (+31)</option>
+                  <option value="IE" data-dial="+353" data-trunk="0">Ireland (+353)</option>
+                  <option value="NZ" data-dial="+64" data-trunk="0">New Zealand (+64)</option>
                   <option value="ES" data-dial="+34">Spain (+34)</option>
                   <option value="IT" data-dial="+39">Italy (+39)</option>
-                  <option value="SE" data-dial="+46">Sweden (+46)</option>
+                  <option value="SE" data-dial="+46" data-trunk="0">Sweden (+46)</option>
                   <option value="NO" data-dial="+47">Norway (+47)</option>
                   <option value="DK" data-dial="+45">Denmark (+45)</option>
-                  <option value="FI" data-dial="+358">Finland (+358)</option>
-                  <option value="BE" data-dial="+32">Belgium (+32)</option>
-                  <option value="CH" data-dial="+41">Switzerland (+41)</option>
-                  <option value="AT" data-dial="+43">Austria (+43)</option>
+                  <option value="FI" data-dial="+358" data-trunk="0">Finland (+358)</option>
+                  <option value="BE" data-dial="+32" data-trunk="0">Belgium (+32)</option>
+                  <option value="CH" data-dial="+41" data-trunk="0">Switzerland (+41)</option>
+                  <option value="AT" data-dial="+43" data-trunk="0">Austria (+43)</option>
                   <option value="PT" data-dial="+351">Portugal (+351)</option>
                   <option value="PL" data-dial="+48">Poland (+48)</option>
                   <option value="MX" data-dial="+52">Mexico (+52)</option>
                   <option value="BR" data-dial="+55">Brazil (+55)</option>
-                  <option value="IN" data-dial="+91">India (+91)</option>
+                  <option value="IN" data-dial="+91" data-trunk="0">India (+91)</option>
+                  <option value="ID" data-dial="+62" data-trunk="0">Indonesia (+62)</option>
+                  <option value="NG" data-dial="+234" data-trunk="0">Nigeria (+234)</option>
                   <option value="SG" data-dial="+65">Singapore (+65)</option>
-                  <option value="MY" data-dial="+60">Malaysia (+60)</option>
-                  <option value="PH" data-dial="+63">Philippines (+63)</option>
-                  <option value="JP" data-dial="+81">Japan (+81)</option>
-                  <option value="KR" data-dial="+82">South Korea (+82)</option>
-                  <option value="ZA" data-dial="+27">South Africa (+27)</option>
-                  <option value="AE" data-dial="+971">United Arab Emirates (+971)</option>
+                  <option value="MY" data-dial="+60" data-trunk="0">Malaysia (+60)</option>
+                  <option value="PH" data-dial="+63" data-trunk="0">Philippines (+63)</option>
+                  <option value="JP" data-dial="+81" data-trunk="0">Japan (+81)</option>
+                  <option value="KR" data-dial="+82" data-trunk="0">South Korea (+82)</option>
+                  <option value="ZA" data-dial="+27" data-trunk="0">South Africa (+27)</option>
+                  <option value="AE" data-dial="+971" data-trunk="0">United Arab Emirates (+971)</option>
                 </select>
                 <label class="visually-hidden" for="phone">Phone number</label>
                 <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="32" enterkeyhint="send" placeholder="Phone number" aria-describedby="form-note form-message" required>
@@ -1138,6 +1140,7 @@
     const dialOptions = [...countryCode.options];
     const knownCodes = [...new Set(dialOptions.map(option => option.dataset.dial))].sort((a, b) => b.length - a.length);
     const selectedDial = () => countryCode.selectedOptions[0]?.dataset.dial || '+1';
+    const selectedTrunk = () => countryCode.selectedOptions[0]?.dataset.trunk || '';
 
     const syncPhone = ({ format = false } = {}) => {
       const typed = phoneInput.value.trim();
@@ -1159,6 +1162,8 @@
       if (dial === '+1' && digits.length === 11 && digits.startsWith('1')) {
         digits = digits.slice(1);
       }
+      const trunk = selectedTrunk();
+      if (trunk && digits.startsWith(trunk)) digits = digits.slice(trunk.length);
 
       phoneInput.setCustomValidity('');
       fullPhone.value = digits ? `${dial}${digits}` : '';
@@ -1189,7 +1194,10 @@
       const form = event.currentTarget;
       const button = form.querySelector('button');
       if (button.classList.contains('is-sending') || button.classList.contains('is-success')) return;
-      if (form.elements.company.value) return;
+      if (form.elements.company.value) {
+        setFormMessage('error', 'We couldn’t submit this form. Refresh the page and try again.');
+        return;
+      }
 
       syncPhone({ format: true });
       if (!/^\+[1-9]\d{7,14}$/.test(fullPhone.value)) {
@@ -1228,7 +1236,8 @@
         });
 
         const result = response.ok ? null : await response.json().catch(() => null);
-        if (!response.ok && result?.code !== '23505') {
+        const isDuplicate = result?.code === '23505';
+        if (!response.ok && !isDuplicate) {
           throw new Error(result?.message || 'Unable to save your signup.');
         }
 
@@ -1240,8 +1249,8 @@
         button.setAttribute('aria-label', 'You’re in — Droyo early-access list confirmed');
         form.setAttribute('aria-busy', 'false');
         form.querySelectorAll('input, select').forEach(control => { control.disabled = true; });
-        setFormMessage('success', result?.code === '23505'
-          ? 'You’re already on the list — no need to sign up again.'
+        setFormMessage('success', isDuplicate
+          ? 'That email or phone is already on the list — no need to sign up again.'
           : 'You’re in. No confirmation needed — we’ll email and text when access is ready.');
         if (!reducedMotion) animate('.signup-inner', { scale: [1, 1.012, 1], duration: 520, ease: 'inOutSine' });
       } catch (error) {

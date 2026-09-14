@@ -73,23 +73,28 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "What do I need to start with Droyo?",
-              "acceptedAnswer": { "@type": "Answer", "text": "A product photo, an avatar choice, and a short product brief. Droyo handles the creative direction through ready-made video templates." }
+              "name": "What do I give Droyo?",
+              "acceptedAnswer": { "@type": "Answer", "text": "A product photo, your avatar choice, and a short product brief. The template handles the repeatable creative direction from there." }
             },
             {
               "@type": "Question",
-              "name": "Which platforms does Droyo support?",
-              "acceptedAnswer": { "@type": "Answer", "text": "Droyo is designed for TikTok, TikTok Shop, Instagram Reels, and YouTube Shorts workflows." }
+              "name": "Do I need to write prompts or edit every video?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No prompt engineering is required. Choose a ready-made format and control the product, avatar, and direction without rebuilding the workflow." }
             },
             {
               "@type": "Question",
-              "name": "Do I need to write AI prompts or edit every video?",
-              "acceptedAnswer": { "@type": "Answer", "text": "No prompt engineering is required. Choose a template, product details, and avatar; Droyo handles the repeatable production flow." }
+              "name": "Where can my videos go?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Droyo is designed around TikTok, TikTok Shop, Instagram Reels, and YouTube Shorts, with connected social workflows for consistent posting." }
             },
             {
               "@type": "Question",
-              "name": "Is Droyo affiliated with TikTok?",
-              "acceptedAnswer": { "@type": "Answer", "text": "No. Droyo is an independent product and is not affiliated with or endorsed by TikTok." }
+              "name": "Does it work for TikTok Shop products?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Product-led formats and batch creation are designed for sellers who need more angles to test without more shoots." }
+            },
+            {
+              "@type": "Question",
+              "name": "What happens after I join?",
+              "acceptedAnswer": { "@type": "Answer", "text": "We are opening early access in stages. You will receive launch updates and an invite by email and SMS when your spot is ready." }
             }
           ]
         }
@@ -815,8 +820,8 @@
                 <input id="full-phone" name="full_phone" type="hidden">
               </div>
               <label class="form-trap" for="company" hidden>Company website</label>
-              <input class="form-trap" id="company" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
-              <button class="liquid-btn send-button" type="submit" aria-label="Get early access"><span class="liquid-fill" aria-hidden="true"></span><span class="glass-light" aria-hidden="true"></span><span class="send-label">Get access <span class="arrow">→</span></span><span class="send-envelope" aria-hidden="true">✉</span><span class="send-success" aria-hidden="true">✓ You’re in</span></button>
+              <input class="form-trap" id="company" name="company" type="text" tabindex="-1" autocomplete="off" hidden>
+              <button class="liquid-btn send-button" type="submit" aria-label="Get access"><span class="liquid-fill" aria-hidden="true"></span><span class="glass-light" aria-hidden="true"></span><span class="send-label">Get access <span class="arrow">→</span></span><span class="send-envelope" aria-hidden="true">✉</span><span class="send-success" aria-hidden="true">✓ You’re in</span></button>
             </form>
             <noscript><p class="form-message is-error">JavaScript is required to submit the waitlist form safely.</p></noscript>
             <div class="form-message" id="form-message" role="status" aria-live="polite" aria-atomic="true"></div>
@@ -1200,7 +1205,7 @@
       button.classList.add('is-sending');
       button.disabled = true;
       button.setAttribute('aria-busy', 'true');
-      button.setAttribute('aria-label', 'Sending your early-access signup');
+      button.setAttribute('aria-label', 'Get access — sending');
       form.setAttribute('aria-busy', 'true');
 
       const started = performance.now();
@@ -1232,7 +1237,7 @@
         button.classList.remove('is-sending');
         button.classList.add('is-success');
         button.setAttribute('aria-busy', 'false');
-        button.setAttribute('aria-label', 'You are on the Droyo early-access list');
+        button.setAttribute('aria-label', 'You’re in — Droyo early-access list confirmed');
         form.setAttribute('aria-busy', 'false');
         form.querySelectorAll('input, select').forEach(control => { control.disabled = true; });
         setFormMessage('success', result?.code === '23505'
@@ -1243,7 +1248,7 @@
         button.classList.remove('is-sending');
         button.disabled = false;
         button.setAttribute('aria-busy', 'false');
-        button.setAttribute('aria-label', 'Get early access');
+        button.setAttribute('aria-label', 'Get access');
         form.setAttribute('aria-busy', 'false');
         setFormMessage('error', error.name === 'AbortError'
           ? 'The connection timed out. Check your signal and try again.'

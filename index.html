@@ -1154,7 +1154,9 @@
           if (!currentMatches && matchingOption) countryCode.value = matchingOption.value;
         }
         fullPhone.value = normalized;
-        phoneInput.setCustomValidity(/^\+[1-9]\d{7,14}$/.test(normalized) ? '' : 'Enter a complete international phone number.');
+        const validInternational = /^\+[1-9]\d{7,14}$/.test(normalized);
+        const validNorthAmerican = !normalized.startsWith('+1') || /^\+1\d{10}$/.test(normalized);
+        phoneInput.setCustomValidity(validInternational && validNorthAmerican ? '' : 'Enter a complete international phone number.');
         return;
       }
 
@@ -1165,7 +1167,9 @@
       const trunk = selectedTrunk();
       if (trunk && digits.startsWith(trunk)) digits = digits.slice(trunk.length);
 
-      phoneInput.setCustomValidity('');
+      phoneInput.setCustomValidity(dial === '+1' && digits && digits.length !== 10
+        ? 'Enter a 10-digit US or Canadian phone number.'
+        : '');
       fullPhone.value = digits ? `${dial}${digits}` : '';
       if (format && dial === '+1' && digits.length === 10) {
         phoneInput.value = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;

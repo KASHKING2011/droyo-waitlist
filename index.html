@@ -623,6 +623,7 @@
       .motion-blur { display: none; }
     }
   </style>
+  <noscript><style>#waitlist-form{display:none}</style></noscript>
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -669,7 +670,7 @@
         </div>
         Built with early feedback from organic sellers
       </div>
-      <div class="story-strip" aria-label="From product input to social-ready output" data-reveal>
+      <div class="story-strip" role="group" aria-label="From product input to social-ready output" data-reveal>
         <div class="story-item"><span class="story-icon" aria-hidden="true">📦</span><span class="story-copy"><strong>Add your product</strong><span>One photo and a short brief</span></span></div>
         <div class="story-item"><span class="story-icon" aria-hidden="true">✨</span><span class="story-copy"><strong>Pick the direction</strong><span>Avatar + ready-made template</span></span></div>
         <div class="story-item"><span class="story-icon" aria-hidden="true">▶</span><span class="story-copy"><strong>Build a video batch</strong><span>Ready for your social queue</span></span></div>
@@ -777,7 +778,7 @@
               <input id="email" name="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" enterkeyhint="next" placeholder="Email address" aria-describedby="form-note form-message" required>
               <div class="phone-field">
                 <label class="visually-hidden" for="country-code">Country code</label>
-                <select id="country-code" name="country_code" required>
+                <select id="country-code" name="country_code">
                   <option value="US" data-dial="+1" selected>United States (+1)</option>
                   <option value="CA" data-dial="+1">Canada (+1)</option>
                   <option value="GB" data-dial="+44">United Kingdom (+44)</option>
@@ -813,11 +814,11 @@
                 <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="32" enterkeyhint="send" placeholder="Phone number" aria-describedby="form-note form-message" required>
                 <input id="full-phone" name="full_phone" type="hidden">
               </div>
-              <label class="form-trap" for="company" aria-hidden="true">Company website</label>
+              <label class="form-trap" for="company" hidden>Company website</label>
               <input class="form-trap" id="company" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
               <button class="liquid-btn send-button" type="submit" aria-label="Get early access"><span class="liquid-fill" aria-hidden="true"></span><span class="glass-light" aria-hidden="true"></span><span class="send-label">Get access <span class="arrow">→</span></span><span class="send-envelope" aria-hidden="true">✉</span><span class="send-success" aria-hidden="true">✓ You’re in</span></button>
             </form>
-            <noscript><style>#waitlist-form{display:none}</style><p class="form-message is-error">JavaScript is required to submit the waitlist form safely.</p></noscript>
+            <noscript><p class="form-message is-error">JavaScript is required to submit the waitlist form safely.</p></noscript>
             <div class="form-message" id="form-message" role="status" aria-live="polite" aria-atomic="true"></div>
             <div class="form-note" id="form-note">By joining, you agree to receive Droyo launch updates by email and SMS. Message frequency varies; message and data rates may apply. Consent is not a condition of purchase. Reply STOP to opt out. See our <a href="/privacy.html">Privacy Notice</a> and <a href="/terms.html">Terms</a>.</div>
           </div>
